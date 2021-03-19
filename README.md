@@ -9,9 +9,11 @@ This application uses [JRediSearch](https://github.com/RediSearch/JRediSearch) t
 This application exposes various endpoint that are directly consumable in a front end.
 
 ## How it works?
-![img.png](img.png)
+![img.png](docs/img.png)
+![basic_search.png](docs/basic_search.png)
+![faceted_search.png](docs/faceted_search.png)
 
-###How the data is stored:
+### How the data is stored:
 
 As a Redis developer, one of the first things to look when building your application is to define the structure of the key and data (data design/data modeling).
 
