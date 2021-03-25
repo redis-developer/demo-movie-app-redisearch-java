@@ -7,7 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RedisearchJedisRestApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RedisearchJedisRestApplication.class, args);
+		// Read environment variables
+		String port = System.getenv("PORT");
+		if (port == null) {
+			port = "8085";
+		}
+		SpringApplication app = new SpringApplication(RedisearchJedisRestApplication.class);
+		app.setDefaultProperties(Collections.singletonMap("server.port", port));
+		app.run(args);
 	}
 
 }

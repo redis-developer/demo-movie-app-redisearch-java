@@ -42,12 +42,12 @@ public class RediSearchService {
 
         // Get the configuration from the application properties/environment
         indexName = env.getProperty("redis.index");
-        redisUrl = env.getProperty("redis.url");
+        redisUrl = env.getProperty("REDIS_ENDPOINT_URL");
 
         // handle case with Redis Cloud
         URI redisUri = new URI(redisUrl);
         if (redisUri.getHost().contains("redis-") && redisUri.getHost().contains("cloud")){
-            String redisPassword =  env.getProperty("redis.password");
+            String redisPassword =  env.getProperty("REDIS_PASSWORD");
             jedisPool = new JedisPool(new JedisPoolConfig(),
                     redisUri.getHost(), redisUri.getPort(), Protocol.DEFAULT_TIMEOUT, redisPassword);
         } else {
