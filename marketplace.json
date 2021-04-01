@@ -6,17 +6,10 @@
     "repo_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java",
     "download_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java/archive/main.zip",
     "hosted_url": "",
-    "quick_deploy": "true",
-    "deploy_buttons": [
-      {
-        "heroku": "https://heroku.com/deploy?template=https://github.com/redis-developer/demo-movie-app-redisearch-java"
-      },
-      {
-        "Google": "https://deploy.cloud.run/?git_repo=https://github.com/redis-developer/demo-movie-app-redisearch-java"
-      }
-    ],
+    "quick_deploy": "false",
+    "deploy_buttons": [],
     "language": ["Java"],
-    "redis_commands": ["INCR", "SET", "ZRANGEBYSCORE"],
+    "redis_commands": ["FT.SEARCH", "SORTBY"],
     "redis_features": ["Redisearch"],
     "redis_modules": [],
     "app_image_urls": [

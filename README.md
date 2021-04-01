@@ -9,9 +9,237 @@ This application uses [JRediSearch](https://github.com/RediSearch/JRediSearch) t
 This application exposes various endpoint that are directly consumable in a front end.
 
 ## How it works?
+###Main page
 ![img.png](docs/img.png)
+
+
+***Example: Get 'Action' Movies released in 2015-2020 and sort by Rating desc***
+
+Select necessary parameters from a dropdown lists via UI;
+
+Redisearch query:
+```
+> FT.SEARCH idx:movie "@genre:{Action} @release_year:[2015 2020] SORTBY rating desc"
+```
+___
+### Basic Search
+
 ![basic_search.png](docs/basic_search.png)
+
+Enter any search string for the movie database for example ```@genre:{Drama} @release_year:[1990 1995]```
+
+**Some Sample Queries**:
+
+***Fuzzy Search 'empre', for 'Empire''***
+
+Search: ```%empre%```
+
+```
+> FT.SEARCH idx:movie "%empre% "
+```
+
+***All 'Action' Movies***
+
+Search: ```@genre:{Action}``` 
+
+```
+> FT.SEARCH idx:movie "@genre:{Action} "
+```
+
+***All movies relaesed in 2000***
+
+Search: ```@release_year:[2000 2000]```
+
+```
+> FT.SEARCH idx:movie "@release_year:[2000 2000] "
+```
+
+***'Drama' from 2010 to 2020***
+
+Search: ```@genre:{Drama} @release_year:[2010 2020]```
+
+```
+> FT.SEARCH idx:movie "@genre:{Drama} @release_year:[2010 2020] "
+```
+
+***Star Wars Movies***
+
+Search: ```star wars```
+
+```
+> FT.SEARCH idx:movie "star wars "
+```
+
+***Star Wars movies that does not mention Jedi***
+
+Search: ```star wars -jedi```
+
+```
+> FT.SEARCH idx:movie "star wars -jedi "
+```
+___
+
+###Faceted Search
+
 ![faceted_search.png](docs/faceted_search.png)
+
+**Example : *All the movies that contains the string "`war`"***
+
+Search: ```war```
+Release years: 1960-2020
+Rating: 0-10
+
+Redisearch query:
+
+```
+> FT.SEARCH idx:movie "war @release_year:[1960 2020] @rating:[0 10] "
+1) (integer) 2
+2) "movie:11005"
+3)  1) "title"
+    2) "Star Wars: Episode VI - Return of the Jedi"
+    ...
+   14) "tt0086190"
+4) "movie:11002"
+5)  1) "title"
+    2) "Star Wars: Episode V - The Empire Strikes Back"
+    ...
+   13) "imdb_id"
+   14) "tt0080684"
+```
+
+The FT.SEARCH commands returns a list of results starting with the number of results, then the list of elements (keys & fields).
+
+As you can see the movie *Star Wars: Episode V - The Empire Strikes Back* is found, even though you used only the word “war” to match “Wars” in the title. This is because the title has been indexed as text, so the field is [tokenized](https://oss.redislabs.com/redisearch/Escaping/) and [stemmed](https://oss.redislabs.com/redisearch/Stemming/).
+
+---
+**Example : *All the movies that contains the string "`war` but NOT the `jedi` one"***
+
+Search: ```war -jedi```
+
+Release years: 1960-2020
+
+Rating: 0-10
+
+Adding the string `-jedi` (minus) will ask the query engine not to return values that contain `jedi`.
+
+Redisearch query:
+```
+> FT.SEARCH idx:movie "war -jedi @release_year:[1960 2020] @rating:[0 10]"
+1) (integer) 1
+2) "movie:11002"
+3) 1) "title"
+   2) "Star Wars: Episode V - The Empire Strikes Back"
+   3) "release_year"
+   4) "1980"
+```
+
+---
+**Example : *All the movies that contains the string "`gdfather` using fuzzy search"***
+
+**Search**: ```%gdfather%```
+
+Release years: 1960-2020
+
+Rating: 0-10
+
+As you can see the word godfather contains a speelling error, it can however be matched using [fuzzy matching](https://oss.redislabs.com/redisearch/Query_Syntax/#fuzzy_matching). Fuzzy matches are performed based on [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) (LD).
+
+Redisearch query:
+
+```
+> FT.SEARCH idx:movie "%gdfather% @release_year:[1960 2020] @rating:[0 10] "
+1) (integer) 1
+2) "movie:11003"
+3) 1) "title"
+   2) "The Godfather"
+   3) "release_year"
+   4) "1972"
+```
+
+---
+**Example  : *All `Thriller` movies"***
+
+The `genre` fields is indexed as a TAG and allows exact match queries.
+
+The syntax to query a TAG field is  @field_name:{value}
+
+Search: ```@genre:{Thriller}```
+
+Release years: 1960-2020
+
+Rating: 0-10
+
+Redisearch query:
+```
+> FT.SEARCH idx:movie "@genre:{Thriller}" @release_year:[1960 2020] @rating:[0 10]
+1) (integer) 1
+2) "movie:11004"
+3) 1) "title"
+   2) "Heat"
+   3) "release_year"
+   4) "1995"
+```
+
+---
+**Example : *All `Thriller` or `Action` movies"***
+
+Search: ```@genre:{Thriller|Action}```
+
+Release years: 1960-2020
+
+Rating: 0-10
+
+Redisearch query:
+
+```
+> FT.SEARCH idx:movie "@genre:{Thriller|Action}" @release_year:[1960 2020] @rating:[0 10]
+1) (integer) 3
+2) "movie:11004"
+3) 1) "title"
+   2) "Heat"
+   3) "release_year"
+   4) "1995"
+4) "movie:11005"
+5) 1) "title"
+   2) "Star Wars: Episode VI - Return of the Jedi"
+   3) "release_year"
+   4) "1983"
+6) "movie:11002"
+7) 1) "title"
+   2) "Star Wars: Episode V - The Empire Strikes Back"
+   3) "release_year"
+   4) "1980"
+```
+
+You can find more information about the Tag filters in [the documentation](https://oss.redislabs.com/redisearch/master/Query_Syntax/#tag_filters).
+
+---
+**Example : *All `Thriller` or `Action` movies that does not have `Jedi` in the title"***
+
+Search: ```@genre:{Thriller|Action} @title:-jedi```
+
+Release years: 1960-2020
+
+Rating: 0-10
+
+Redisearch query:
+
+```
+> FT.SEARCH idx:movie "@genre:{Thriller|Action} @title:-jedi" @release_year:[1960 2020] @rating:[0 10]
+1) (integer) 2
+2) "movie:11004"
+3) 1) "title"
+   2) "Heat"
+   3) "release_year"
+   4) "1995"
+4) "movie:11002"
+5) 1) "title"
+   2) "Star Wars: Episode V - The Empire Strikes Back"
+   3) "release_year"
+   4) "1980"
+```
+
+---
 
 ### How the data is stored:
 
@@ -250,6 +478,31 @@ The user hashes contain the following fields.
     <tbody>
   </table>
 </details>
+
+### Create the Index
+
+Create the index with the following command:
+
+```
+> FT.CREATE idx:movie ON hash PREFIX 1 "movie:" SCHEMA title TEXT SORTABLE release_year NUMERIC SORTABLE rating NUMERIC SORTABLE genre TAG SORTABLE
+```
+
+Before running some queries let's look at the command in detail:
+
+* [`FT.CREATE`](https://oss.redislabs.com/redisearch/master/Commands/#ftcreate) : creates an index with the given spec. The index name will be used in all the key names so keep it short.
+* `idx:movie` : the name of the index
+* `ON hash` : the type of structure to be indexed. *Note that in RediSearch 2.0 only hash structures are supported, this parameter will accept other Redis data types in future as RediSearch is updated to index them*
+* `PREFIX 1 "movie:"` : the prefix of the keys that should be indexed. This is a list, so since we want to only index movie:* keys the number is 1. Suppose you want to index movies and tv_show that have the same fields, you can use: `PREFIX 2 "movie:" "tv_show:"`
+* `SCHEMA ...`: defines the schema, the fields and their type, to index, as you can see in the command, we are using [TEXT](https://oss.redislabs.com/redisearch/Query_Syntax/#a_few_query_examples), [NUMERIC](https://oss.redislabs.com/redisearch/Query_Syntax/#numeric_filters_in_query) and [TAG](https://oss.redislabs.com/redisearch/Query_Syntax/#tag_filters), and [SORTABLE](https://oss.redislabs.com/redisearch/Sorting/) parameters.
+
+You can find information about the [FT.CREATE](https://oss.redislabs.com/redisearch/Commands/#ftcreate) command in the [documentation](https://oss.redislabs.com/redisearch/Commands/#ftcreate).
+
+
+You can look at the index information with the following command:
+
+```
+> FT.INFO idx:movie
+```
 
 ### How the data is accessed:
 
@@ -637,6 +890,13 @@ You can also use the following syntax:
 
 The application and all the services, including RediSearch, are available as a Docker Compose application.
 
+**NOTE: You need to specify required environment variables in ```docker-compose.yml``` under service ```rest-java```**:
+
+```
+REDIS_ENDPOINT_URL=redis://<your endpoint url>
+REDIS_PASSWORD=
+REDIS_INDEX=(by default idx:movie)
+```
 
 To run the application:
 
@@ -664,23 +924,3 @@ Run the following command to delete the containers & images:
 ```
 > docker-compose down -v --rmi local --remove-orphans
 ```
-
-## Deployment
-
-To make deploys work, you need to create free account in https://redislabs.com/try-free/
-
-#### Deploy to Heroku
-
-<p>
-    <a href="https://heroku.com/deploy" target="_blank">
-        <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heorku" />
-    </a>
-</p>
-
-#### Deploy to Google Cloud
-
-<p>
-    <a href="https://deploy.cloud.run" target="_blank">
-        <img src="https://deploy.cloud.run/button.svg" alt="Run on Google Cloud" width="150px"/>
-    </a>
-</p>

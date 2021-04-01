@@ -41,7 +41,7 @@ public class RediSearchService {
         log.info("Init RediSearchService");
 
         // Get the configuration from the application properties/environment
-        indexName = env.getProperty("redis.index");
+        indexName = env.getProperty("REDIS_INDEX");
         redisUrl = env.getProperty("REDIS_ENDPOINT_URL");
 
         // handle case with Redis Cloud

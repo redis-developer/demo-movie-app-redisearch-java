@@ -18,10 +18,11 @@ services:
             context: ./redisearch-java-rest
             dockerfile: Dockerfile
         ports:
-            - "8085:8085" 
+            - "8085:8085"
         environment:
-            - REDIS_URL=redis://redisearch:6379
             - REDIS_INDEX=idx:movie
+            - REDIS_ENDPOINT_URL=redis://
+            - REDIS_PASSWORD=
         networks:
             - redisearch-gettingstarted
         restart: always
