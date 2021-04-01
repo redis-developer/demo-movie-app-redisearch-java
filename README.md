@@ -9,7 +9,7 @@ This application uses [JRediSearch](https://github.com/RediSearch/JRediSearch) t
 This application exposes various endpoint that are directly consumable in a front end.
 
 ## How it works?
-###Main page
+### Main page
 ![img.png](docs/img.png)
 
 
@@ -79,7 +79,7 @@ Search: ```star wars -jedi```
 ```
 ___
 
-###Faceted Search
+### Faceted Search
 
 ![faceted_search.png](docs/faceted_search.png)
 
