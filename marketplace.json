@@ -1,25 +1,24 @@
 {
-    "app_name": "Demo Movie App Redisearch Java",
-    "description": "A movie demo app that shows redisearch capabilities",
-    "type": "App",
-    "contributed_by": "Redis Labs",
-    "repo_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java",
-    "download_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java/archive/main.zip",
-    "hosted_url": "",
-    "quick_deploy": "false",
-    "deploy_buttons": [],
-    "language": ["Java"],
-    "redis_commands": ["FT.SEARCH", "SORTBY"],
-    "redis_features": ["Redisearch"],
-    "redis_modules": [],
-    "app_image_urls": [
-      "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/img.png",
-      "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/basic_search.png",
-      "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/faceted_search.png"
-    ],
-    "youtube_url": "",
-    "special_tags": [],
-    "verticals": [],
-    "markdown": "https://raw.githubusercontent.com/redislabs-training/redis-sitesearch/master/README.md"
-  }
-  
+  "app_name": "Demo Movie App Redisearch Java",
+  "description": "A movie demo app that shows redisearch capabilities",
+  "type": "App",
+  "contributed_by": "Redis Labs",
+  "repo_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java",
+  "download_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java/archive/main.zip",
+  "hosted_url": "",
+  "quick_deploy": "false",
+  "deploy_buttons": [],
+  "language": ["Java"],
+  "redis_commands": ["FT.SEARCH", "SORTBY"],
+  "redis_features": ["Search"],
+  "redis_modules": ["RediSearch"],
+  "app_image_urls": [
+    "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/img.png",
+    "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/basic_search.png",
+    "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/faceted_search.png"
+  ],
+  "youtube_url": "",
+  "special_tags": [],
+  "verticals": [],
+  "markdown": "https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/README.md"
+}
