@@ -13,7 +13,7 @@
   "redis_features": ["Search"],
   "redis_modules": ["RediSearch"],
   "app_image_urls": [
-    "https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/img.png",
+    "https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/img.png"
   ],
   "youtube_url": "",
   "special_tags": [],
