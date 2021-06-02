@@ -4,10 +4,14 @@ The goal of this application is to show how to develop a RediSearch application 
 This application uses [JRediSearch](https://github.com/RediSearch/JRediSearch) that is based on [Jedis](https://github.com/xetorthio/jedis).
 This application exposes various endpoint that are directly consumable in a front end.
 
+
+## Technical Stack
+
+- Frontend: Java
+- Backend: Redis(RediSearch)
+
 ## How it works?
 ### Main page
-![img.png](https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/docs/img.png)
-
 
 ***Example: Get 'Action' Movies released in 2015-2020 and sort by Rating desc***
 
