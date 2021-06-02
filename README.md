@@ -1,11 +1,7 @@
-# RediSearch Movie App Demo
+# Movie Database Demo app in Java and RediSearch 
 
-The goal of this application is to show how to develop a RediSearch application with Java.
-
-This project is a Spring Boot application.
-
+The goal of this application is to show how to develop a RediSearch application with Java. This project is a Spring Boot application.
 This application uses [JRediSearch](https://github.com/RediSearch/JRediSearch) that is based on [Jedis](https://github.com/xetorthio/jedis).
-
 This application exposes various endpoint that are directly consumable in a front end.
 
 ## How it works?
