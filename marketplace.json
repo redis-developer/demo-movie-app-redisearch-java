@@ -1,5 +1,5 @@
 {
-  "app_name": "Movie Database Demo app using Java and RediSearch",
+  "app_name": "Movie Database Demo app using Java",
   "description": "Movie Database Demo app in Java based on RediSearch capabilities",
   "type": "App",
   "contributed_by": "Redis Labs",
