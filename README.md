@@ -7,7 +7,7 @@ This application exposes various endpoint that are directly consumable in a fron
 
 ## Technical Stack
 
-- Frontend: Java
+- Frontend: Vue.js, Javascript
 - Backend: Redis(RediSearch)
 
 ## How it works?
