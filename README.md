@@ -6,7 +6,7 @@ This application exposes various endpoint that are directly consumable in a fron
 
 ## How it works?
 ### Main page
-![img.png](https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/docs/img.png)
+![img.png](https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/docs/img.png)
 
 
 ***Example: Get 'Action' Movies released in 2015-2020 and sort by Rating desc***
@@ -20,7 +20,7 @@ Redisearch query:
 ___
 ### Basic Search
 
-![basic_search.png](https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/master/docs/basic_search.png)
+![basic_search.png](https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/docs/basic_search.png)
 
 Enter any search string for the movie database for example ```@genre:{Drama} @release_year:[1990 1995]```
 
@@ -77,7 +77,7 @@ ___
 
 ### Faceted Search
 
-![faceted_search.png](https://github.com/redis-developer/demo-movie-app-redisearch-java/tree/master/docs/faceted_search.png)
+![faceted_search.png](https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/docs/faceted_search.png)
 
 **Example : *All the movies that contains the string "`war`"***
 
