@@ -10,7 +10,7 @@
   "deploy_buttons": [],
   "language": ["Java"],
   "redis_commands": ["FT.SEARCH", "FT.INFO", "FT.CREATE", "SORTBY"],
-  "redis_features": ["Search"],
+  "redis_features": [],
   "redis_modules": ["RediSearch"],
   "app_image_urls": [
     "https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/img.png"
