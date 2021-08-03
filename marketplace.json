@@ -4,7 +4,7 @@
   "type": "Full App",
   "contributed_by": "Redis Labs",
   "repo_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java",
-  "preview_image_url": "https://raw.githubusercontent.com/redis-developer/demo-movie-appp-redisearch-java/master/images/app_preview_image.png",
+  "preview_image_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java/blob/e272e83a757a4e1fc6162c6982a4aaaddf806726/images/app_preview_image.png",
   "download_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java/archive/main.zip",
   "hosted_url": "",
   "quick_deploy": "false",
