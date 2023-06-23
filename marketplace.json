@@ -1,8 +1,8 @@
 {
   "app_name": "Movie Database app in Java",
-  "description": "Movie Database app in Java based on RediSearch capabilities",
+  "description": "Movie Database app in Java based on Redis Search capabilities",
   "type": "Full App",
-  "contributed_by": "Redis Labs",
+  "contributed_by": "Redis",
   "repo_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java",
   "preview_image_url": "https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/images/app_preview_image.png",
   "download_url": "https://github.com/redis-developer/demo-movie-app-redisearch-java/archive/main.zip",
@@ -12,7 +12,7 @@
   "language": ["Java"],
   "redis_commands": ["FT.SEARCH", "FT.INFO", "FT.CREATE", "SORTBY"],
   "redis_features": [],
-  "redis_modules": ["RediSearch"],
+  "redis_modules": ["Search and Query"],
   "app_image_urls": [
     "https://raw.githubusercontent.com/redis-developer/demo-movie-app-redisearch-java/master/img.png"
   ],
