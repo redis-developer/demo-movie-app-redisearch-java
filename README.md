@@ -1,14 +1,14 @@
-# Movie Database app in Java and RediSearch 
+# Movie Database app in Java andRedis Search
 
-The goal of this application is to show how to develop a RediSearch application with Java. This project is a Spring Boot application.
-This application uses [JRediSearch](https://github.com/RediSearch/JRediSearch) that is based on [Jedis](https://github.com/xetorthio/jedis).
+The goal of this application is to show how to develop aRedis Searchapplication with Java. This project is a Spring Boot application.
+This application uses [JRedis Search](https://github.com/RediSearch/JRediSearch) that is based on [Jedis](https://github.com/xetorthio/jedis).
 This application exposes various endpoint that are directly consumable in a front end.
 
 
 ## Technical Stack
 
 - Frontend: Vue.js, Javascript
-- Backend: Redis(RediSearch)
+- Backend: Redis
 
 ## How it works?
 ### Main page
@@ -40,7 +40,7 @@ Search: ```%empre%```
 
 ***All 'Action' Movies***
 
-Search: ```@genre:{Action}``` 
+Search: ```@genre:{Action}```
 
 ```
 > FT.SEARCH idx:movie "@genre:{Action} "
@@ -256,7 +256,7 @@ For example:
 
 and for the movies information you should use a Redis [Hash](https://redis.io/topics/data-types#hashes).
 
-A Redis Hash allows the application to structure all the movie attributes in individual fields; also RediSearch will index the fields based on the index definition.
+A Redis Hash allows the application to structure all the movie attributes in individual fields; alsoRedis Searchwill index the fields based on the index definition.
 
 
 **Movies**
@@ -275,7 +275,7 @@ The movie hashes contain the following fields.
 * **`poster`** : Link to the movie poster.
 * **`imdb_id`** : id of the movie in the [IMDB](https://imdb.com) database.
 
-<details> 
+<details>
   <summary>Sample Data: <b>movie:521</b></summary>
   <table>
       <thead>
@@ -348,7 +348,7 @@ The movie hashes contain the following fields.
 * **`last_name`** : The last name of the actor.
 * **`date_of_birth`** : The birth year of the actor
 
-<details> 
+<details>
   <summary>Sample Data: <b>actor:521</b></summary>
   <table>
       <thead>
@@ -399,7 +399,7 @@ The user hashes contain the following fields.
 * **`last_login`** : The last login time for the user, as EPOC time.
 * **`ip_address`** : The IP address of the user.
 
-<details> 
+<details>
  <summary>Sample Data: <b>user:3233</b></summary>
   <table>
       <thead>
@@ -491,7 +491,7 @@ Before running some queries let's look at the command in detail:
 
 * [`FT.CREATE`](https://oss.redislabs.com/redisearch/master/Commands/#ftcreate) : creates an index with the given spec. The index name will be used in all the key names so keep it short.
 * `idx:movie` : the name of the index
-* `ON hash` : the type of structure to be indexed. *Note that in RediSearch 2.0 only hash structures are supported, this parameter will accept other Redis data types in future as RediSearch is updated to index them*
+* `ON hash` : the type of structure to be indexed. *Note that inRedis Search2.0 only hash structures are supported, this parameter will accept other Redis data types in future asRedis Searchis updated to index them*
 * `PREFIX 1 "movie:"` : the prefix of the keys that should be indexed. This is a list, so since we want to only index movie:* keys the number is 1. Suppose you want to index movies and tv_show that have the same fields, you can use: `PREFIX 2 "movie:" "tv_show:"`
 * `SCHEMA ...`: defines the schema, the fields and their type, to index, as you can see in the command, we are using [TEXT](https://oss.redislabs.com/redisearch/Query_Syntax/#a_few_query_examples), [NUMERIC](https://oss.redislabs.com/redisearch/Query_Syntax/#numeric_filters_in_query) and [TAG](https://oss.redislabs.com/redisearch/Query_Syntax/#tag_filters), and [SORTABLE](https://oss.redislabs.com/redisearch/Sorting/) parameters.
 
@@ -506,7 +506,7 @@ You can look at the index information with the following command:
 
 ### How the data is accessed:
 
-One of the goals of RediSearch is to provide rich querying capabilities such as:
+One of the goals ofRedis Searchis to provide rich querying capabilities such as:
 
 * simple and complex conditions
 * sorting
@@ -516,10 +516,10 @@ One of the goals of RediSearch is to provide rich querying capabilities such as:
 
 ### Conditions
 
-The best way to start to work with RediSearch query capabilities is to look at the various conditions options.
+The best way to start to work withRedis Searchquery capabilities is to look at the various conditions options.
 
 
-<details> 
+<details>
   <summary>
   <i><b>
   Find all the movies that contain the word 'heat' or related to 'heat'
@@ -564,7 +564,7 @@ This query is a "fieldless" condition, this means that the query engine has:
 
 
 
-<details> 
+<details>
   <summary>
   <i><b>
     Find all the movies with a title that contains the word 'heat' or related to 'heat'
@@ -595,7 +595,7 @@ So only 2 movies are returned.
 </details>
 
 
-<details> 
+<details>
   <summary>
   <i><b>
   Find all the movies where the title contains 'heat' and does NOT contains 'california'
@@ -636,7 +636,7 @@ As you can see the first query only searches for woman in the title and returns 
 
 
 
-<details> 
+<details>
   <summary>
   <i><b>
   Find all the 'Drama' movies that have 'heat' in the title
@@ -673,7 +673,7 @@ TAG is the structure to use when you want to do exact matches on strings/words.
 </details>
 
 
-<details> 
+<details>
   <summary>
   <i><b>
   Find all the 'Drama' or 'Comedy' movies that have 'heat' in the title
@@ -714,7 +714,7 @@ FT.SEARCH "idx:movie" "@title:(heat) | @genre:{Drama|Comedy} " RETURN 3 title pl
 </details>
 
 
-<details> 
+<details>
   <summary>
   <i><b>Find all 'Mystery' OR 'Thriller' movies, released in 2014 OR 2018</b></i>
   </summary>
@@ -767,7 +767,7 @@ Summary
 
 A very common use case when querying data is to sort the data on a specific field, and paginate over the result.
 
-<details> 
+<details>
   <summary>
   <i><b>Query all the `Action` movies, sorted by release year from most recent to the oldest</b></i>
   </summary>
@@ -801,7 +801,7 @@ Note: The field used in the [SORTBY](https://oss.redislabs.com/redisearch/Sortin
 ----
 ### Paginate
 
-<details> 
+<details>
   <summary>
   <i><b>Query all the `Action` movies, sorted by release year from the oldest to the most recent one, returning the record by batch of 100 movies</b></i>
   </summary>
@@ -814,7 +814,7 @@ Note: The field used in the [SORTBY](https://oss.redislabs.com/redisearch/Sortin
      2) "1966"
      3) "title"
      4) "Texas,Adios"
-...  
+...
 200) "movie:12"
 201) 1) "release_year"
      2) "2014"
@@ -841,7 +841,7 @@ To paginate to the next batch you need to change the limit as follows:
 ### Count
 
 
-<details> 
+<details>
   <summary>
   <i><b>Count the number of 'Action' movies</b></i>
   </summary>
@@ -857,7 +857,7 @@ Based on the sample queries that you have seen earlier, if you specify `LIMIT 0 
 </details>
 
 
-<details> 
+<details>
   <summary>
   <i><b>Count the number of 'Action' movies released in 2017 </b></i>
   </summary>
@@ -888,7 +888,7 @@ You can also use the following syntax:
 
 ### Running the application in Docker
 
-The application and all the services, including RediSearch, are available as a Docker Compose application.
+The application and all the services, including Redis Search, are available as a Docker Compose application.
 
 **NOTE: You need to specify required environment variables in ```docker-compose.yml``` under service ```rest-java```**:
 
@@ -906,7 +906,7 @@ To run the application:
 
 This Docker Compose will start:
 
-1. RediSearch instance on port 6380, and import all movies, actors and create indexes
+1.Redis Searchinstance on port 6380, and import all movies, actors and create indexes
 1. The Java REST Service available on port 8085
 1. The frontend on port 8084
 
